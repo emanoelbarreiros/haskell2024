@@ -19,8 +19,18 @@ module Lista1 (
     converter,
     consultar,
     delPosicao,
-    inserirPosicaoX
+    inserirPosicaoX,
+    unfold,
+    mapUnfold,
+    iterateUnfold,
+    altMap,
+    curry',
+    uncurry',
+    merge,
+    metades,
+    mergeSort
     ) where
+
 
 iguais :: Eq a => a -> a -> a -> Int
 iguais a b c
@@ -100,7 +110,7 @@ maiorLista l = (m, pos m l)
     where
         m = maximum l
 
-pos :: (Eq t, Num a) => t -> [t] -> a
+pos :: Eq t => t -> [t] -> Int
 pos _ [] = error "lista vazia"
 pos e (x:xs)
     | x == e = 0
@@ -122,3 +132,50 @@ delPosicao p l = take p l ++ drop (p + 1) l
 
 inserirPosicaoX :: [Int] -> Int -> Int -> [Int]
 inserirPosicaoX l p v = take p l ++ [v] ++ drop p l
+
+
+
+--Lista alta ordem
+
+unfold :: (t -> Bool) -> (t -> a) -> (t -> t) -> t -> [a]
+unfold p h t x 
+       | p x = []
+       | otherwise = h x : unfold p h t (t x)
+
+
+mapUnfold :: Eq b => (b -> a) -> [b] -> [a]
+mapUnfold f = unfold (== []) (f . head) tail
+
+iterateUnfold :: (a -> a) -> a -> [a]
+iterateUnfold = unfold (const False) id
+
+altMap :: (t -> a) -> (t -> a) -> [t] -> [a]
+altMap _ _ [] = []
+altMap f1 f2 (x:xs) = f1 x : altMap f2 f1 xs
+
+curry' :: ((a, b) -> t) -> a -> b -> t
+curry' f = (\ x -> (\y -> f (x,y)))
+
+uncurry' :: (t1 -> t2 -> t3) -> (t1, t2) -> t3
+uncurry' f (x,y) = f x y
+
+merge :: Ord a => [a] -> [a] -> [a]
+merge [] [] = []
+merge l [] = l
+merge [] l = l
+merge (x:xs) (y:ys)
+    | x <= y = x : merge xs (y:ys)
+    | otherwise = y : merge (x:xs) ys
+
+metades :: [a] -> ([a], [a])
+metades [] = ([],[])
+metades l = splitAt corte l
+    where
+        corte = div (length l) 2
+
+mergeSort :: Ord a => [a] -> [a]
+mergeSort [] = []
+mergeSort [x] = [x]
+mergeSort l = merge (mergeSort esq) (mergeSort dir)
+    where
+        (esq,dir) = metades l
