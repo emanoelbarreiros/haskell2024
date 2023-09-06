@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module Arvores (
     Arvore (..),
     existe,
@@ -21,13 +23,13 @@ contar :: Arvore a -> Int
 contar (Folha _) = 1
 contar (No esq _ dir) = contar esq + contar dir + 1
 
-instance (Eq a) => Eq (Arvore a) where
+instance Eq a => Eq (Arvore a) where
     (==) :: Arvore a -> Arvore a -> Bool
     (No x1 y1 z1) == (No x2 y2 z2) = y1 == y2 && x1 == x2 && z1 == z2
     (Folha x) == (Folha y) = x == y
     _ == _ = False
 
-instance (Ord a) => Ord (Arvore a) where
+instance Ord a => Ord (Arvore a) where
     (<) :: Arvore a -> Arvore a -> Bool
     Folha _ < (No _ _ _) = True
     (No esq1 _ dir1) < (No esq2 _ dir2) = contar esq1 + contar dir1 < contar esq2 + contar dir2

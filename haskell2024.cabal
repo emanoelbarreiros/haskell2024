@@ -26,9 +26,15 @@ source-repository head
 library
   exposed-modules:
       Arvores
+      Bee1241
+      CorrecaoProva
+      Forca
       Lib
+      Life
       Lista1
       Natural
+      Nim
+      Nim2
       Prova1
       Prova1Reteste
       Recursao
@@ -39,6 +45,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , strings
   default-language: Haskell2010
 
 executable haskell2024-exe
@@ -51,6 +58,7 @@ executable haskell2024-exe
   build-depends:
       base >=4.7 && <5
     , haskell2024
+    , strings
   default-language: Haskell2010
 
 test-suite haskell2024-test
@@ -64,4 +72,5 @@ test-suite haskell2024-test
   build-depends:
       base >=4.7 && <5
     , haskell2024
+    , strings
   default-language: Haskell2010

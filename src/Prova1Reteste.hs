@@ -9,7 +9,7 @@ dependentes [] = []
 dependentes ((_,deps):fs) = deps ++ dependentes fs
 
 dependentes' :: [Funcionario] -> [Dependente]
-dependentes' = foldl (\sem ele -> sem ++ (snd ele)) []
+dependentes' = foldl (\sem ele -> sem ++ snd ele) []
 
 dependentes'' :: [Funcionario] -> [Dependente]
 dependentes'' xs = concat [y | (_,y) <- xs]
