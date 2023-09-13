@@ -38,6 +38,7 @@ library
       Prova1
       Prova1Reteste
       Recursao
+      Revisao2EE
   other-modules:
       Paths_haskell2024
   hs-source-dirs:
